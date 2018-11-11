@@ -70,7 +70,7 @@
 
         <div class="divider"></div>
         <h3>Questions</h3>
-        <form id="status_questions" onchange="update_answers()">
+        <form id="status_questions" onchange="update_answers(); save_form()">
         <div class="row">
             <div class="col m6 l6">
                 <div class="card small">
@@ -274,7 +274,7 @@
           document.addEventListener('DOMContentLoaded', function() {
             var elems = document.querySelectorAll('.dropdown-trigger');
               var instances = M.Dropdown.init(elems, {});
-
+              load_form();
               update_answers();
           });
         

@@ -3,6 +3,15 @@ var NOVICE = "nov";
 var PRO = "pro";
 var PRO_INELIG = "proi";
 
+var form_elems = [
+    'easters_deb', 
+    'easters_suc', 
+    'australs_deb', 
+    'australs_suc', 
+    'worlds_deb', 
+    'worlds_suc'
+];
+
 function easters_status(form_responses) {
     var status_obj = {
         "deb_status": INVALID,
@@ -65,9 +74,7 @@ function womens_status(form_responses) {
     var null_deb = worlds_deb === null || australs_deb === null || easters_deb == null;
     
     var australs_suc = form_responses['australs_suc'];
-    var worlds_suc = form_responses['worlds_suc'];
-    var null_suc = australs_suc === null || worlds_suc == null;
-    if (null_deb === true || null_suc === true) {
+    var worlds_suc = form_responses['worlds_suc']; var null_suc = australs_suc === null || worlds_suc == null; if (null_deb === true || null_suc === true) {
         status_obj.deb_status = INVALID;
         status_obj.message = "You have not yet given enough information to determine your status.";
         return status_obj
@@ -99,14 +106,6 @@ function womens_status(form_responses) {
 
 
 function get_form_responses(){
-    var form_elems = [
-        'easters_deb', 
-        'easters_suc', 
-        'australs_deb', 
-        'australs_suc', 
-        'worlds_deb', 
-        'worlds_suc'
-    ];
     var response = {};
     for (i = 0; i < form_elems.length; i++){
         var elem = document.querySelector('input[name='+form_elems[i]+']:checked');
@@ -157,6 +156,24 @@ function update_answers(){
         womens_content.innerHTML += "</ul>"
     }
 
+}
 
+function save_form(){
+    var form_responses = get_form_responses();
+    form_responses = JSON.stringify(form_responses);
+    window.localStorage.setItem('status_questions', form_responses);
+}
+
+function load_form(){
+    if (localStorage.getItem('status_questions')){
+        var status_questions = localStorage.getItem('status_questions');
+        status_questions = JSON.parse(status_questions);
+        for (i = 0; i < form_elems.length; i++){
+            var elem = document.querySelector('input[name='+form_elems[i]+'][id='+status_questions[form_elems[i]]+']');
+            if (elem !== null) elem.checked = true;
+        }
+    } else {
+        localStorage.setItem('status_questions', "{}")
+    }
 
 }
