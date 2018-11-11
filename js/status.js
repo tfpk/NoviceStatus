@@ -120,7 +120,7 @@ function update_answers(){
     var status_classes = {};
     status_classes[INVALID] = "grey darken-2";
     status_classes[NOVICE] = "green darken-2";
-    status_classes[PRO] = "amber darken-4";
+    status_classes[PRO] = "orange darken-4";
     status_classes[PRO_INELIG] = "deep-orange darken-2";
     var form_responses = get_form_responses();
 
